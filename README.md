@@ -1,7 +1,5 @@
-# walkmen_app
-
-# Ni en pedo pago spotify. 
+# walkmen_app 
 
 ## Getting Started
-
+#### Ni en pedo pago spotify.
 # walkmen-app
