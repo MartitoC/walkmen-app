@@ -73,7 +73,7 @@ class SongTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 16),
                 const Divider(
                   color: Colors.white,
                   thickness: 1,
