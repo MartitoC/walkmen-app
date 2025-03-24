@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:walkmen_app/widgets/song_tile.dart';
 import 'package:walkmen_app/widgets/nav_bar.dart';
+import 'package:walkmen_app/blocs/music/music_state.dart';
+import 'package:walkmen_app/blocs/music/music_event.dart';
+import 'package:walkmen_app/blocs/music/music_bloc.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<MusicBloc>().add(FetchSongsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +56,43 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return SongTile(
-                        title: 'Canción ${index + 1}',
-                        artist: 'Artista ${index + 1}',
-                        imagePath:
-                            index % 1 == 0 ? 'assets/images/blur.png' : '',
-                      );
+                  child: BlocBuilder<MusicBloc, MusicState>(
+                    builder: (context, state) {
+                      if (state is MusicLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is MusicLoaded) {
+                        if (state.songs.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              'No se encontraron canciones',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                        }
+
+                        return ListView.builder(
+                          itemCount: state.songs.length,
+                          itemBuilder: (context, index) {
+                            final song = state.songs[index];
+                            return SongTile(
+                              title: song.title,
+                              artist: song.artist,
+                              imagePath: 'assets/images/blur.png', // temporal
+                            );
+                          },
+                        );
+                      } else if (state is MusicError) {
+                        return Center(
+                          child: Text(
+                            state.message,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+
+                      return const SizedBox();
                     },
                   ),
                 ),

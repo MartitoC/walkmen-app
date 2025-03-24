@@ -10,13 +10,27 @@ class NavBar extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Colors.transparent,
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.home, size: 30, color: Colors.white),
-          Icon(Icons.search, size: 30, color: Colors.white),
-          Icon(Icons.library_music, size: 30, color: Colors.white),
-          Icon(Icons.download_rounded, size: 30, color: Colors.white),
+          IconButton(
+            icon: const Icon(Icons.home, size: 30, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.search, size: 30, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon:
+                const Icon(Icons.library_music, size: 30, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.download_rounded,
+                size: 30, color: Colors.white),
+            onPressed: () {},
+          ),
         ],
       ),
     );
